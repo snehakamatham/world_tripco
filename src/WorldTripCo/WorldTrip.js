@@ -30,7 +30,13 @@ class WorldTrip extends Component {
             anew: '',
             cnew: '',
             inew: '',
-            trav:''
+            trav: '',
+            travelarray: [
+                { name: 'Economy', val: 'economy' },
+                { name: 'Premium Economy', val: 'premium' },
+                { name: 'Business', val: 'business' },
+                { name: 'First Class', val: 'firstclass' },
+            ]
         }
     }
 
@@ -62,28 +68,25 @@ class WorldTrip extends Component {
         })
     }
 
-    settravelclass = (e, param) => {
+    handletravelchange = (val) => {
         this.setState({
-            travelclass: param
+            travelclass: val
         })
     }
 
     adultincrement = () => {
         let { adultcounter } = this.state;
-
-
         let adultcount = adultcounter + 1
         this.setState({
             adultcounter: adultcount,
         })
-
-        console.log(adultcounter, "adultcounter>8adultcounter>8")
         if (adultcounter >= 8) {
             this.setState({
                 childcounter: 1
             })
         }
     }
+
     adultdecrement = () => {
         let { adultcounter } = this.state
         let count = adultcounter - 1;
@@ -96,17 +99,16 @@ class WorldTrip extends Component {
                 adultcounter: count,
             })
         }
-
     }
 
     childincrement = () => {
         let { childcounter } = this.state
-
         let count = childcounter + 1
         this.setState({
             childcounter: count
         })
     }
+
     childdecrement = () => {
         let { childcounter } = this.state
         let count = childcounter - 1
@@ -128,6 +130,7 @@ class WorldTrip extends Component {
             infantcounter: count
         })
     }
+
     infantdecrement = () => {
         let { infantcounter } = this.state
         let count = infantcounter - 1
@@ -143,26 +146,22 @@ class WorldTrip extends Component {
     }
 
     handleSubmit = () => {
-        let { adultcounter, childcounter, infantcounter ,travelclass } = this.state
+        let { adultcounter, childcounter, infantcounter, travelclass } = this.state
         this.setState({
             anew: adultcounter,
             cnew: childcounter,
             inew: infantcounter,
-            trav : travelclass,
-            traveldialog:false
+            trav: travelclass,
+            traveldialog: false
         })
     }
 
     render() {
         const { classes } = this.props
-        const { radiocheck, traveldialog, traveldialogref, travelclass, adultcounter, childcounter, infantcounter, anew, cnew, inew,trav } = this.state
+        const { radiocheck, traveldialog, traveldialogref, travelclass, adultcounter, childcounter, infantcounter, anew, cnew, inew, trav, travelarray } = this.state
         return <div className={classes.maindiv}>
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid container justifyContent='center' >
-                <Grid container item md={9} justifyContent='center'>
+                <Grid container item md={9} justifyContent='center' style={{ marginTop: '60px' }}>
                     <label className={classes.heading}>Book Domestic and International Flight Tickets</label>
                 </Grid>
                 <Grid container item md={9} className={classes.maincard} justifyContent='flex-start'>
@@ -181,13 +180,11 @@ class WorldTrip extends Component {
                             <div className={classes.delhi}><span>Delhi</span></div>
                             <div className={classes.delhi2}>DEL, Delhi Airport </div>
                         </div>
-
                         <div className={classes.fromdiv} id="fromfield">
                             <div className={classes.fromlabel}>To</div>
                             <div className={classes.delhi}><span>Bengaluru</span></div>
                             <div className={classes.delhi2}>BLR, Kempegowda Airport </div>
                         </div>
-
                         <div className={classes.departurediv} id="fromfield">
                             <div>
                                 <div className={classes.departurelabel}>Departure</div>
@@ -196,7 +193,6 @@ class WorldTrip extends Component {
                             </div>
                             <div ><ExpandMoreIcon size="medium" color="primary" style={{ marginTop: '11px' }} /></div>
                         </div>
-
                         <div className={classes.departurediv} id="fromfield">
                             <div>
                                 <div className={classes.departurelabel}>Return</div>
@@ -207,21 +203,20 @@ class WorldTrip extends Component {
                             <div className={classes.travellabel}>Traveller's & Class</div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <div>
-                                    <div className={classes.delhi} style={{ display: 'flex' }}><span>{anew!=''?anew : 1}</span> Adult</div>
-                                    <div className={classes.delhi2}>{trav !='' ? trav :'Economy'} </div>
+                                    <div className={classes.delhi} style={{ display: 'flex' }}><span>{anew != '' ? anew : 1}</span> Adult</div>
+                                    <div className={classes.delhi2}>{trav != '' ? trav : 'Economy'} </div>
                                 </div>
-                                <div style={{ visibility: anew!=0? 'visible' : 'hidden' }}>
+                                <div style={{ visibility: anew != 0 ? 'visible' : 'hidden' }}>
                                     <div className={classes.delhi} style={{ marginLeft: '10px!important', display: 'flex' }}>,<span>{cnew}</span> Child</div>
                                     <div className={classes.delhi2}> </div>
                                 </div>
 
-                                <div style={{ visibility: inew!= 0 ? 'visible' : 'hidden' }}>
+                                <div style={{ visibility: inew != 0 ? 'visible' : 'hidden' }}>
                                     <div className={classes.delhi} style={{ display: 'flex' }}>,<span>{inew}</span> Infant</div>
                                     <div className={classes.delhi2}> </div>
                                 </div>
                             </div>
                         </div>
-
 
                         {traveldialog && (
                             <div ref={traveldialogref}>
@@ -233,7 +228,7 @@ class WorldTrip extends Component {
                                                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                     <div>
                                                         <div className={classes.delhi} style={{ display: 'flex' }}><span>{adultcounter >= 2 ? adultcounter : 1}</span> Adult</div>
-                                                        <div className={classes.delhi2}>{travelclass != '' ? travelclass : 'Economy'} </div>
+                                                        <div className={classes.delhi2} style={{ textTransform: 'capitalize' }}>{travelclass != '' ? travelclass : 'Economy'} </div>
                                                     </div>
                                                     <div style={{ visibility: childcounter > 0 ? 'visible' : 'hidden' }}>
                                                         <div className={classes.delhi} style={{ marginLeft: '10px!important', display: 'flex' }}>,<span>{childcounter}</span> Child</div>
@@ -254,11 +249,11 @@ class WorldTrip extends Component {
                                                     <Typography style={{ color: adultcounter > 8 ? 'red' : '' }}><b>Adults</b></Typography>
                                                     <Typography variant='caption'>(Aged 12+ yrs)</Typography>
                                                     <div className={classes.adult1}>
-                                                        <div onClick={(e) => { this.adultdecrement() }} style={{ backgroundColor: '', cursor: adultcounter <= 1 ? 'disabled' : 'pointer', padding: '3px 5px', alignItems: 'center' }}>
+                                                        <div onClick={(e) => { this.adultdecrement() }} className={classes.counterlabeldesign}>
                                                             <RemoveIcon size="small" color={`${adultcounter <= 1 ? 'disabled' : 'primary'}`} />
                                                         </div>
-                                                        <div style={{ alignItems: 'center', height: '100%', fontSize: '20px' }}>{adultcounter}</div>
-                                                        <div onClick={(e) => { this.adultincrement() }} style={{ backgroundColor: '', cursor: 'pointer', padding: '3px 5px' }}>
+                                                        <div className={classes.maincounterdesign}>{adultcounter}</div>
+                                                        <div onClick={(e) => { this.adultincrement() }} className={classes.counterdesign} >
                                                             <AddIcon size="small" color="primary" />
                                                         </div>
                                                     </div>
@@ -267,44 +262,36 @@ class WorldTrip extends Component {
                                                     <Typography style={{ color: adultcounter > 8 ? 'red' : '' }}><b>Children</b></Typography>
                                                     <Typography variant='caption'>(Aged 2-12 yrs)</Typography>
                                                     <div className={classes.adult1}>
-                                                        <div onClick={() => { this.childdecrement() }}
-                                                            style={{ backgroundColor: '', cursor: 'pointer', padding: '3px 5px', alignItems: 'center' }}
-                                                        >
+                                                        <div onClick={() => { this.childdecrement() }} className={classes.counterlabeldesign}>
                                                             <RemoveIcon size="small" color={`${childcounter <= 1 ? 'disabled' : 'primary'}`} />
                                                         </div>
-                                                        <div style={{ alignItems: 'center', height: '100%', fontSize: '20px' }}>{childcounter}</div>
-                                                        <div onClick={() => { this.childincrement() }} style={{ backgroundColor: '', cursor: 'pointer', padding: '0px 5px' }}>
+                                                        <div className={classes.maincounterdesign}>{childcounter}</div>
+                                                        <div onClick={() => { this.childincrement() }} className={classes.counterdesign}>
                                                             <AddIcon size="small" color="primary" />
                                                         </div>
                                                     </div>
                                                 </Grid>
                                                 <Grid item md={4}>
-
                                                     <Typography><b>Infants</b></Typography>
                                                     <Typography variant='caption'>(Below 2 yrs)</Typography>
                                                     <div className={classes.adult1}>
-                                                        <div onClick={() => { this.infantdecrement() }} style={{ backgroundColor: '', cursor: 'pointer', padding: '3px 5px', alignItems: 'center' }}>
+                                                        <div onClick={() => { this.infantdecrement() }} className={classes.counterlabeldesign}>
                                                             <RemoveIcon size="small" color={`${infantcounter <= 1 ? 'disabled' : 'primary'}`} />
                                                         </div>
-                                                        <div style={{ alignItems: 'center', height: '100%', fontSize: '20px' }}>1</div>
-                                                        <div onClick={() => { this.infantincrement() }} style={{ backgroundColor: '', cursor: 'pointer', padding: '3px 5px' }}>
+                                                        <div className={classes.maincounterdesign}>{infantcounter}</div>
+                                                        <div onClick={() => { this.infantincrement() }} className={classes.counterdesign} >
                                                             <AddIcon size="small" color="primary" />
                                                         </div>
                                                     </div>
                                                 </Grid>
                                             </Grid>
-
                                             <Grid item md={12} style={{ marginTop: '25px' }}>
                                                 <center><b>Travel Class</b></center>
                                                 <div style={{ display: 'flex', marginTop: '20px' }}>
-                                                    <div className={classes.travelclass} onClick={(e) => { this.settravelclass(e, 'Economy') }}
-                                                        style={travelclass == "Economy" ? travelstyle : travelstyle2}>Economy</div>
-                                                    <div className={classes.travelclass} onClick={(e) => { this.settravelclass(e, 'Premium') }}
-                                                        style={travelclass == "Premium" ? travelstyle : travelstyle2}>Premium Economy</div>
-                                                    <div className={classes.travelclass} onClick={(e) => { this.settravelclass(e, 'Business') }}
-                                                        style={travelclass == "Business" ? travelstyle : travelstyle2}>Business</div>
-                                                    <div className={classes.travelclass} onClick={(e) => { this.settravelclass(e, 'First Class') }}
-                                                        style={travelclass == "First Class" ? travelstyle : travelstyle2}>First Class</div>
+                                                    {travelarray.map((row, i) => {
+                                                        return <div className={classes.travelclass} key={i} onClick={(e) => { this.handletravelchange(row.val) }}
+                                                            style={travelclass == row.val ? travelstyle : travelstyle2}>{row.name}</div>
+                                                    })}
                                                 </div>
                                             </Grid>
                                         </div>
@@ -332,9 +319,7 @@ class WorldTrip extends Component {
                     </div>
 
                     <Grid container item md={12}>
-                        <Grid item md={1}>
-                            <Typography variant='caption'>Select A <br />Fare Type:</Typography>
-                        </Grid>
+                        <Grid item md={1}><Typography variant='caption'>Select A <br />Fare Type:</Typography></Grid>
                         <Grid item md={11}>
                             <div style={{ display: 'flex', marginTop: '10px' }}>
                                 <div style={{ backgroundColor: '#e9f1fc', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px', padding: '0px 10px' }}>
@@ -356,17 +341,13 @@ class WorldTrip extends Component {
                                 </div>
                             </div>
                             <div style={{ zIndex: '9999', marginTop: '30px' }}>
-                                <Button style={{ backgroundColor: '#ff6d38', borderRadius: '30px', padding: '12px 35px', textTransform: 'uppercase', fontWeight: '800', color: 'white', fontSize: '20px' }}>Search Flights</Button>
+                                <Button className={classes.searchflightbtn}>Search Flights</Button>
                             </div>
                         </Grid>
                     </Grid>
                 </Grid>
-
             </Grid>
-
-
         </div>
     }
 }
-
 export default withStyles(WorldStyles)(WorldTrip);

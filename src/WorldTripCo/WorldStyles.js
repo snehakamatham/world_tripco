@@ -167,6 +167,31 @@ const WorldStyles = {
         padding:'5px 12px',
         margin:'2px',
         cursor:'pointer'
+    },
+    counterdesign:{
+        backgroundColor: '', 
+        cursor: 'pointer', 
+        padding: '3px 5px'
+    },
+    maincounterdesign:{
+        alignItems: 'center', 
+        height: '100%', 
+        fontSize: '20px'
+    },
+    counterlabeldesign:{
+        backgroundColor: '', 
+        cursor: 'pointer', 
+        padding: '3px 5px', 
+        alignItems: 'center'
+    },
+    searchflightbtn:{
+        backgroundColor: '#ff6d38', 
+        borderRadius: '30px', 
+        padding: '12px 35px', 
+        textTransform: 'uppercase', 
+        fontWeight: '800', 
+        color: 'white', 
+        fontSize: '20px'
     }
 
 
